@@ -1,15 +1,16 @@
 package it.unicam.cs.lc.lc2122.gedcom;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Rappresenta un individuo in un albero genealogico.
  *
  * @author Template: Luca Tesei
- *
  */
 public class Individual {
     // Codice univoco
@@ -207,9 +208,28 @@ public class Individual {
 
     @Override
     public String toString() {
-        // TODO reimplementare facendo una stringa formattata solo con le informazioni
-        // effettivamente disponibili
-        return "";
+        String[] i = new String[1];
+        i[0] = "Individual{" +
+                "code = " + this.code;
+        i[0] += (this.givenName != null) ? ", givenName = " + this.givenName : " ";
+        i[0] += (this.surname != null) ? ", surname = " + this.surname : " ";
+        i[0] += (this.birthDate != null) ? ", birth date = " + this.toFormattedDate(this.birthDate) : "";
+
+
+        i[0] += (this.birthPlace != null) ? ", birth place = " + this.birthPlace : "";
+        i[0] += (this.deathDate != null) ? ", death date = " + this.toFormattedDate(this.deathDate) : "";
+        i[0] += (this.deathPlace != null) ? ", death place = " + this.deathPlace : "";
+        i[0] += (this.buryPlace != null) ? ", bury place = " + this.buryPlace : "";
+        i[0] += (this.father != null) ? ", father = " + this.father : "";
+        i[0] += (this.mother != null) ? ", mother = " + this.mother : "";
+        i[0] += (this.father != null) ? ", father = " + this.father : "";
+        this.childs.forEach(c -> i[0] += ", child code = " + c.code + "\n");
+        return i[0];
+    }
+
+    private String toFormattedDate(GregorianCalendar gregorianCalendar) {
+        SimpleDateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");
+        return formattedDate.format(gregorianCalendar.getTime());
     }
 
 }
