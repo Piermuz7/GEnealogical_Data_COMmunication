@@ -1,8 +1,10 @@
-package it.unicam.cs.lc.lc2122.gedcom;
+package it.unicam.cs.lc.lc2122.gedcom.exceptions;
 
 /**
  * Thrown when a GEDCOM application attempts to use a tag with a CODE in a
  * case where it is not permitted have multiple CODE occurrences.
+ *
+ * @author Piermichele Rosati
  */
 public class DuplicateCodeException extends RuntimeException {
 

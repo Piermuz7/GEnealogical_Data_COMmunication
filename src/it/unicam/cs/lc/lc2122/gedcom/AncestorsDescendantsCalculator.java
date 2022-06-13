@@ -14,6 +14,8 @@ import java.util.Set;
 /**
  * An ancestors or descendants calculator implementation.
  * This Singleton calculator needs only a stream of characters which corresponding to the GEDCOM data.
+ *
+ * @author Piermichele Rosati
  */
 public class AncestorsDescendantsCalculator {
 

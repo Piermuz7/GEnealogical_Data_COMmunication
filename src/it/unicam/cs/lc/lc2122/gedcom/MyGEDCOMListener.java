@@ -1,5 +1,8 @@
 package it.unicam.cs.lc.lc2122.gedcom;
 
+import it.unicam.cs.lc.lc2122.gedcom.exceptions.DuplicateCodeException;
+import it.unicam.cs.lc.lc2122.gedcom.exceptions.IllegalCodeException;
+import it.unicam.cs.lc.lc2122.gedcom.exceptions.RepeatedTagException;
 import it.unicam.cs.lc.lc2122.gedcom.generatedsources.GEDCOMBaseListener;
 import it.unicam.cs.lc.lc2122.gedcom.generatedsources.GEDCOMParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -94,12 +97,10 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                 throw new DuplicateCodeException("A family with code : " + c + " already exists");
         });
         // family, fams, famc, code equal to individual code
-        this.fams_famcCodes.forEach(c -> {
-            this.familityTree.getCodes().forEach(code -> {
-                if (code.equals(c))
-                    throw new DuplicateCodeException("Code : " + c + " already used for another individual or family");
-            });
-        });
+        this.fams_famcCodes.forEach(c -> this.familityTree.getCodes().forEach(code -> {
+            if (code.equals(c))
+                throw new DuplicateCodeException("Code : " + c + " already used for another individual or family");
+        }));
     }
 
     @Override
@@ -148,6 +149,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     }
 
     @Override
+    @SuppressWarnings("All")
     public void exitBirt(GEDCOMParser.BirtContext ctx) {
         int[] day_month_year;
         if (ctx.date2() != null) {
@@ -167,8 +169,9 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     }
 
     @Override
+    @SuppressWarnings("All")
     public void exitDeat(GEDCOMParser.DeatContext ctx) {
-        int[] day_month_year = new int[3];
+        int[] day_month_year;
         if (ctx.date2() != null) {
             if (ctx.date2().period == null) {
                 day_month_year = this.convertDateFormatToDate(ctx.date2().day.getText(), ctx.date2().month.getText(), ctx.date2().YEAR().getText());
@@ -247,12 +250,9 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     private Individual initParentFamily(String parent) {
         Individual ind = null;
         if (parent != null) {
-            if (this.familityTree.isPresent(parent))
-                ind = this.familityTree.getIndividual(parent);
-            else {
+            if (!this.familityTree.isPresent(parent))
                 this.familityTree.addIndividual(new Individual(parent));
-                ind = this.familityTree.getIndividual(parent);
-            }
+            ind = this.familityTree.getIndividual(parent);
             if (!this.childs.isEmpty())
                 this.addChilds(ind, this.childs);
         }
