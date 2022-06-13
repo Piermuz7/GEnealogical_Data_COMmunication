@@ -3,7 +3,7 @@
 <div id="top"></div>
 Application for parsing GEDCOM file and computing ancestors or descendants of an individual.
 
-Genealogical_Data_Communication is developed for Compilers Project Exam at University of Camerino.
+Genealogical_Data_Communication is developed for Languages and Compilers Project Exam at University of Camerino.
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
