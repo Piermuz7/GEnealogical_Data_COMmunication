@@ -12,7 +12,6 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     private String husb, wife;      // CODE of visiting husband and wife
     private final List<String> childs;    // CODE of all childs of the visiting family
     private final List<String> tags;       // TAG for count checking
-
     private final Map<String, String> indi_tags;   // TAG for individual data
     private final Map<String, GregorianCalendar> dates; // TAG for individual birth and deat
 
@@ -37,9 +36,8 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     @Override
     public void exitHead(GEDCOMParser.HeadContext ctx) {
         this.tags.forEach(t -> {
-            if (!this.checkAtMostOneTAG(t, this.tags)) {
+            if (!this.checkAtMostOneTAG(t, this.tags))
                 throw new RepeatedTagException(t);
-            }
         });
     }
 
@@ -135,16 +133,19 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
 
     @Override
     public void enterFams(GEDCOMParser.FamsContext ctx) {
+        // TODO: fare controllo se appare fams ma non c'è nessuna corrispondenza...
         super.enterFams(ctx);
     }
 
     @Override
     public void enterFamc(GEDCOMParser.FamcContext ctx) {
+        // TODO: stesso controllo di fams
         super.enterFamc(ctx);
     }
 
     @Override
     public void enterFamily(GEDCOMParser.FamilyContext ctx) {
+        System.out.println("enter: " + ctx.CODE().getText());
         this.husb = null;
         this.wife = null;
         this.childs.clear();
@@ -153,8 +154,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
 
     @Override
     public void exitFamily(GEDCOMParser.FamilyContext ctx) {
-        Individual iHusb = this.initParentFamily(this.husb);
-        Individual iWife = this.initParentFamily(this.wife);
+        // adding each individual at the family tree
         if (!this.childs.isEmpty())
             this.childs.forEach(c -> {
                 Individual in;
@@ -162,13 +162,21 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                     in = this.familityTree.getIndividual(c);
                 else {
                     this.familityTree.addIndividual(new Individual(c));
+                    System.out.println("c = " + c + " added? " + this.familityTree.getIndividual(c));
                     in = this.familityTree.getIndividual(c);
                 }
-                if (iHusb != null)
-                    in.setFather(this.familityTree.getIndividual(this.husb));
-                if (iWife != null)
-                    in.setMother(this.familityTree.getIndividual(this.wife));
             });
+        // initializing parents with childs and vice versa
+        Individual iHusb = this.initParentFamily(this.husb);
+        Individual iWife = this.initParentFamily(this.wife);
+        this.childs.forEach(c -> {
+            Individual in = this.familityTree.getIndividual(c);
+            if (iHusb != null)
+                in.setFather(this.familityTree.getIndividual(this.husb));
+            if (iWife != null)
+                in.setMother(this.familityTree.getIndividual(this.wife));
+        });
+
     }
 
     private Individual initParentFamily(String parent) {
@@ -180,6 +188,9 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                 this.familityTree.addIndividual(new Individual(parent));
                 ind = this.familityTree.getIndividual(parent);
             }
+            System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
+            this.childs.forEach(System.out::println);
+            System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
             if (!this.childs.isEmpty())
                 this.addChilds(ind, this.childs);
         }
@@ -188,11 +199,12 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
 
     private void addChilds(Individual i, List<String> childs) {
         childs.forEach(c -> {
+            System.out.println("getIndi for: " + c + " -> " + this.familityTree.getIndividual(c));
             if (this.familityTree.isPresent(c)) {
+                System.out.println("c:" + c);
                 i.addChild(this.familityTree.getIndividual(c));
             }
         });
-
     }
 
     // TODO : controllare FAM definita prima di INDI
@@ -204,28 +216,24 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                     if (this.husb == null)
                         this.husb = this.getCleanCode(ctx.CODE().getText());
                     else
-                        throw new RepeatedTagException(this.husb);
+                        throw new RepeatedTagException(ctx.i.getText());
                     break;
                 }
                 case "1 WIFE ": {
                     if (this.wife == null)
                         this.wife = this.getCleanCode(ctx.CODE().getText());
                     else
-                        throw new RepeatedTagException(this.husb);
+                        throw new RepeatedTagException(ctx.i.getText());
                     break;
                 }
                 case "1 CHIL ": {
+                    System.out.println("switch: " + ctx.CODE().getText());
                     this.childs.add(this.getCleanCode(ctx.CODE().getText()));
                     break;
                 }
             }
         }
-
-    }
-
-    @Override
-    public void enterReq(GEDCOMParser.ReqContext ctx) {
-        super.enterReq(ctx);
+        this.childs.forEach(System.out::println);
     }
 
     @Override
