@@ -1,6 +1,5 @@
 package it.unicam.cs.lc.lc2122.gedcom;
 
-import it.unicam.cs.lc.lc2122.gedcom.generatedsources.DuplicateCodeException;
 import it.unicam.cs.lc.lc2122.gedcom.generatedsources.GEDCOMBaseListener;
 import it.unicam.cs.lc.lc2122.gedcom.generatedsources.GEDCOMParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
