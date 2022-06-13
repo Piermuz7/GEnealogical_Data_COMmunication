@@ -55,12 +55,10 @@ public class AncestorsDescendantsCalculator {
             input = CharStreams.fromFileName(inputFile);
         else
             input = CharStreams.fromStream(System.in);
-
         GEDCOMLexer lexer = new GEDCOMLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         GEDCOMParser parser = new GEDCOMParser(tokens);
         ParseTree parseTree = parser.s();
-
         ParseTreeWalker walker = new ParseTreeWalker();
         MyGEDCOMListener myGEDCOMListener = new MyGEDCOMListener();
         walker.walk(myGEDCOMListener, parseTree);

@@ -87,6 +87,8 @@ public class FamilyTree {
      * @throws IllegalArgumentException se code non è presente nell'albero
      */
     public Set<String> getAncestorsOf(String code) {
+        if (!this.isPresent(code))
+            throw new IllegalArgumentException("Nonexistent individual with code : " + code);
         Set<String> ances = new HashSet<>();
         Individual in = this.getIndividual(code);
         if (in != null) {
@@ -109,6 +111,8 @@ public class FamilyTree {
      * @throws IllegalArgumentException se code non è presente nell'albero
      */
     public Set<String> getDescendantsOf(String code) {
+        if (!this.isPresent(code))
+            throw new IllegalArgumentException("Nonexistent individual with code : " + code);
         Set<String> desc = new HashSet<>();
         Individual in = this.getIndividual(code);
         if (in != null) {
