@@ -1,41 +1,56 @@
 package it.unicam.cs.lc.lc2122.gedcom.generatedsources;
 
 import it.unicam.cs.lc.lc2122.gedcom.FamilyTree;
+import it.unicam.cs.lc.lc2122.gedcom.IllegalCodeException;
 import it.unicam.cs.lc.lc2122.gedcom.Individual;
 import it.unicam.cs.lc.lc2122.gedcom.RepeatedTagException;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.*;
 
+/**
+ * GEDCOM Listener to apply Walker pattern for ancestors/descendants computing.
+ *
+ * @author Piermichele Rosati
+ */
 public class MyGEDCOMListener extends GEDCOMBaseListener {
     private final FamilyTree familityTree;
-    private String husb, wife;      // CODE of visiting husband and wife
-    private final List<String> childs;    // CODE of all childs of the visiting family
-    private final List<String> tags;       // TAG for count checking
-    private final Map<String, String> indi_tags;   // TAG for individual data
+    private String husb, wife;                          // CODE of visiting husband and wife
+    private final List<String> childs;                  // All childs CODE of the visiting family
+    private final List<String> tags;                    // For repeated TAG checking
+    private final Map<String, String> indiTags;         // TAG for individual data
     private final Map<String, GregorianCalendar> dates; // TAG for individual birth and deat
+    private final Set<String> individualCodeExistence;   // For existing individual code checking
+    private final Set<String> familyCodeExistence;      // For existing family code checking: storing family code
+    private final Set<String> fams_famcCodes;           // For existing family code checking: storing fams and fams
 
+    /**
+     * Creates a GEDCOM Listener.
+     */
     public MyGEDCOMListener() {
         this.familityTree = new FamilyTree();
         this.childs = new ArrayList<>();
         this.tags = new ArrayList<>();
-        indi_tags = new HashMap<>();
-        dates = new HashMap<>();
+        this.indiTags = new HashMap<>();
+        this.dates = new HashMap<>();
+        this.individualCodeExistence = new HashSet<>();
+        this.familyCodeExistence = new HashSet<>();
+        this.fams_famcCodes = new HashSet<>();
     }
 
     @Override
     public void enterHead(GEDCOMParser.HeadContext ctx) {
-        this.tags.add(ctx.HEAD().getText());
+        this.tags.add(ctx.HEAD().getText());    // Adding for repeated tag checking
     }
 
     @Override
     public void enterHead_tag(GEDCOMParser.Head_tagContext ctx) {
-        this.tags.add(ctx.getText());
+        this.tags.add(ctx.getText());   // Adding for repeated tag checking
     }
 
     @Override
     public void exitHead(GEDCOMParser.HeadContext ctx) {
-        this.tags.forEach(t -> {
+        this.tags.forEach(t -> {    // Repeated head tags checking
             if (!this.checkAtMostOneTAG(t, this.tags))
                 throw new RepeatedTagException(t);
         });
@@ -47,40 +62,57 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     }
 
     @Override
+    public void enterTrlr(GEDCOMParser.TrlrContext ctx) {
+        // individual tags existence checking
+        this.familityTree.getCodes().forEach(c -> {
+            if (!this.individualCodeExistence.contains(c))
+                throw new IllegalCodeException(c);
+        });
+        // family tags existence checking
+        this.familyCodeExistence.forEach(c -> {
+            if (!this.fams_famcCodes.contains(c))
+                throw new IllegalCodeException(c);
+        });
+    }
+
+    @Override
     public void enterIndividual(GEDCOMParser.IndividualContext ctx) {
+        this.individualCodeExistence.add(this.getCleanCode(ctx.CODE().getText()));
         this.familityTree.addIndividual(new Individual(this.getCleanCode(ctx.CODE().getText())));
         this.tags.clear();
-        this.indi_tags.clear();
+        this.indiTags.clear();
         this.dates.clear();
     }
 
     @Override
     public void exitIndividual(GEDCOMParser.IndividualContext ctx) {
-        this.indi_tags.keySet().forEach(t -> this.checkAtMostOneTAG(t, new ArrayList<>(this.indi_tags.keySet())));
+        this.indiTags.keySet().forEach(t -> this.checkAtMostOneTAG(t, new ArrayList<>(this.indiTags.keySet())));  // Repeated individual tags checking
         Individual ind = this.familityTree.getIndividual(this.getCleanCode(ctx.CODE().getText()));
-        ind.setSurname(this.indi_tags.get("surname"));
-        ind.setGivenName(this.indi_tags.get("name"));
+        ind.setSurname(this.indiTags.get("surname"));
+        ind.setGivenName(this.indiTags.get("name"));
         ind.setBirthDate(this.dates.get("birthDate"));
-        ind.setBirthPlace(this.indi_tags.get("birthPlace"));
+        ind.setBirthPlace(this.indiTags.get("birthPlace"));
         ind.setDeathDate(this.dates.get("deathDate"));
-        ind.setDeathPlace(this.indi_tags.get("deathPlace"));
-        ind.setBuryPlace(this.indi_tags.get("buryPlace"));
+        ind.setDeathPlace(this.indiTags.get("deathPlace"));
+        ind.setBuryPlace(this.indiTags.get("buryPlace"));
     }
 
     @Override
-    public void enterSurname(GEDCOMParser.SurnameContext ctx) {
+    public void exitSurname(GEDCOMParser.SurnameContext ctx) {
+        // Concats all strings corresponding at surname
         StringBuilder s = new StringBuilder();
         for (TerminalNode n : ctx.STR())
             s.append(n.getText()).append(" ");
-        this.indi_tags.put("surname", s.toString().trim());
+        this.indiTags.put("surname", s.toString().trim());
     }
 
     @Override
     public void exitName(GEDCOMParser.NameContext ctx) {
+        // Concats all strings corresponding at name
         StringBuilder s = new StringBuilder();
         for (TerminalNode n : ctx.STR())
             s.append(n.getText()).append(" ");
-        this.indi_tags.put("name", s.toString().trim());
+        this.indiTags.put("name", s.toString().trim());
     }
 
     @Override
@@ -98,7 +130,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
             StringBuilder s = new StringBuilder();
             for (TerminalNode n : ctx.plac().STR())
                 s.append(n.getText()).append(" ");
-            this.indi_tags.put("birthPlace", s.toString().trim());
+            this.indiTags.put("birthPlace", s.toString().trim());
         }
     }
 
@@ -117,7 +149,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
             StringBuilder s = new StringBuilder();
             for (TerminalNode n : ctx.plac().STR())
                 s.append(n.getText()).append(" ");
-            this.indi_tags.put("deathPlace", s.toString().trim());
+            this.indiTags.put("deathPlace", s.toString().trim());
         }
     }
 
@@ -127,29 +159,29 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
             StringBuilder s = new StringBuilder();
             for (TerminalNode n : ctx.plac().STR())
                 s.append(n.getText()).append(" ");
-            this.indi_tags.put("buryPlace", s.toString().trim());
+            this.indiTags.put("buryPlace", s.toString().trim());
         }
     }
 
     @Override
     public void enterFams(GEDCOMParser.FamsContext ctx) {
-        // TODO: fare controllo se appare fams ma non c'è nessuna corrispondenza...
-        super.enterFams(ctx);
+        this.fams_famcCodes.add(this.getCleanCode(ctx.CODE().getText()));   // For family code existence checking
     }
 
     @Override
     public void enterFamc(GEDCOMParser.FamcContext ctx) {
-        // TODO: stesso controllo di fams
-        super.enterFamc(ctx);
+        this.fams_famcCodes.add(this.getCleanCode(ctx.CODE().getText()));   // For family code existence checking
+        this.indiTags.put("famChild", ctx.FAMC().getText());    // Necessary for repeated tag checking
     }
+
 
     @Override
     public void enterFamily(GEDCOMParser.FamilyContext ctx) {
-        System.out.println("enter: " + ctx.CODE().getText());
         this.husb = null;
         this.wife = null;
         this.childs.clear();
         this.tags.clear();
+        this.familyCodeExistence.add(this.getCleanCode(ctx.CODE().getText()));
     }
 
     @Override
@@ -157,14 +189,8 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         // adding each individual at the family tree
         if (!this.childs.isEmpty())
             this.childs.forEach(c -> {
-                Individual in;
-                if (this.familityTree.isPresent(c))
-                    in = this.familityTree.getIndividual(c);
-                else {
+                if (!this.familityTree.isPresent(c))
                     this.familityTree.addIndividual(new Individual(c));
-                    System.out.println("c = " + c + " added? " + this.familityTree.getIndividual(c));
-                    in = this.familityTree.getIndividual(c);
-                }
             });
         // initializing parents with childs and vice versa
         Individual iHusb = this.initParentFamily(this.husb);
@@ -188,9 +214,6 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                 this.familityTree.addIndividual(new Individual(parent));
                 ind = this.familityTree.getIndividual(parent);
             }
-            System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-            this.childs.forEach(System.out::println);
-            System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
             if (!this.childs.isEmpty())
                 this.addChilds(ind, this.childs);
         }
@@ -199,11 +222,8 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
 
     private void addChilds(Individual i, List<String> childs) {
         childs.forEach(c -> {
-            System.out.println("getIndi for: " + c + " -> " + this.familityTree.getIndividual(c));
-            if (this.familityTree.isPresent(c)) {
-                System.out.println("c:" + c);
+            if (this.familityTree.isPresent(c))
                 i.addChild(this.familityTree.getIndividual(c));
-            }
         });
     }
 
@@ -227,13 +247,11 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                     break;
                 }
                 case "1 CHIL ": {
-                    System.out.println("switch: " + ctx.CODE().getText());
                     this.childs.add(this.getCleanCode(ctx.CODE().getText()));
                     break;
                 }
             }
         }
-        this.childs.forEach(System.out::println);
     }
 
     @Override

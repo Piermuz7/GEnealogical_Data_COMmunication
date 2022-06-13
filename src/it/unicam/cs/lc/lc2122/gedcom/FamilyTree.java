@@ -11,7 +11,6 @@ import java.util.Set;
  * @author Template: Luca Tesei
  */
 
-// TODO: chiedere come fare per tag opzionali...
 
 public class FamilyTree {
     // mappa che contiene tutti gli individui presenti, recuperabili attraverso il
