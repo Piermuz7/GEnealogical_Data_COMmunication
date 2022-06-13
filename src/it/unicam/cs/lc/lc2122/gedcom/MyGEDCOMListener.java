@@ -1,9 +1,8 @@
-package it.unicam.cs.lc.lc2122.gedcom.generatedsources;
+package it.unicam.cs.lc.lc2122.gedcom;
 
-import it.unicam.cs.lc.lc2122.gedcom.FamilyTree;
-import it.unicam.cs.lc.lc2122.gedcom.IllegalCodeException;
-import it.unicam.cs.lc.lc2122.gedcom.Individual;
-import it.unicam.cs.lc.lc2122.gedcom.RepeatedTagException;
+import it.unicam.cs.lc.lc2122.gedcom.generatedsources.DuplicateCodeException;
+import it.unicam.cs.lc.lc2122.gedcom.generatedsources.GEDCOMBaseListener;
+import it.unicam.cs.lc.lc2122.gedcom.generatedsources.GEDCOMParser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.*;
@@ -16,13 +15,15 @@ import java.util.*;
 public class MyGEDCOMListener extends GEDCOMBaseListener {
     private final FamilyTree familityTree;
     private String husb, wife;                          // CODE of visiting husband and wife
+    private String fams, famc;                          // CODE for not equality checking
     private final List<String> childs;                  // All childs CODE of the visiting family
     private final List<String> tags;                    // For repeated TAG checking
     private final Map<String, String> indiTags;         // TAG for individual data
     private final Map<String, GregorianCalendar> dates; // TAG for individual birth and deat
-    private final Set<String> individualCodeExistence;   // For existing individual code checking
-    private final Set<String> familyCodeExistence;      // For existing family code checking: storing family code
+    private final List<String> individualCodeExistence;   // For existing individual code checking
+    private final List<String> familyCodeExistence;      // For existing family code checking: storing family code
     private final Set<String> fams_famcCodes;           // For existing family code checking: storing fams and fams
+    private final Set<String> result;                   // Result set of REQ (ancestors or descendants)
 
     /**
      * Creates a GEDCOM Listener.
@@ -33,9 +34,19 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         this.tags = new ArrayList<>();
         this.indiTags = new HashMap<>();
         this.dates = new HashMap<>();
-        this.individualCodeExistence = new HashSet<>();
-        this.familyCodeExistence = new HashSet<>();
+        this.individualCodeExistence = new ArrayList<>();
+        this.familyCodeExistence = new ArrayList<>();
         this.fams_famcCodes = new HashSet<>();
+        result = new HashSet<>();
+    }
+
+    /**
+     * Returns a result, in according to the REQ tag, of ancestors or descendants of an {@link Individual}.
+     *
+     * @return the result set of the request.
+     */
+    public Set<String> getResult() {
+        return this.result;
     }
 
     @Override
@@ -69,9 +80,26 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                 throw new IllegalCodeException(c);
         });
         // family tags existence checking
-        this.familyCodeExistence.forEach(c -> {
-            if (!this.fams_famcCodes.contains(c))
+        this.fams_famcCodes.forEach(c -> {
+            if (!this.familyCodeExistence.contains(c))
                 throw new IllegalCodeException(c);
+        });
+        // duplicate codes between individuals
+        this.individualCodeExistence.forEach(c -> {
+            if (this.individualCodeExistence.stream().filter(code -> code.equals(c)).count() != 1)
+                throw new DuplicateCodeException("An individual with code : " + c + " already exists");
+        });
+        // duplicate codes between families
+        this.familyCodeExistence.forEach(c -> {
+            if (this.familyCodeExistence.stream().filter(code -> code.equals(c)).count() != 1)
+                throw new DuplicateCodeException("A family with code : " + c + " already exists");
+        });
+        // family, fams, famc, code equal to individual code
+        this.fams_famcCodes.forEach(c -> {
+            this.familityTree.getCodes().forEach(code -> {
+                if (code.equals(c))
+                    throw new DuplicateCodeException("Code : " + c + " already used for another individual or family");
+            });
         });
     }
 
@@ -82,10 +110,15 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         this.tags.clear();
         this.indiTags.clear();
         this.dates.clear();
+        this.fams = null;
+        this.famc = null;
     }
 
     @Override
     public void exitIndividual(GEDCOMParser.IndividualContext ctx) {
+        // unique code between FAMS and FAMC tags
+        if (this.fams != null && this.fams.equals(this.famc))
+            throw new DuplicateCodeException("A FAMC or FAMS tag with code : " + this.getCleanCode(ctx.CODE().getText()) + " already exists");
         this.indiTags.keySet().forEach(t -> this.checkAtMostOneTAG(t, new ArrayList<>(this.indiTags.keySet())));  // Repeated individual tags checking
         Individual ind = this.familityTree.getIndividual(this.getCleanCode(ctx.CODE().getText()));
         ind.setSurname(this.indiTags.get("surname"));
@@ -165,15 +198,15 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
 
     @Override
     public void enterFams(GEDCOMParser.FamsContext ctx) {
-        this.fams_famcCodes.add(this.getCleanCode(ctx.CODE().getText()));   // For family code existence checking
+        this.fams = this.getCleanCode(ctx.CODE().getText());    // For not equality between FAMS and FAMC
+        this.fams_famcCodes.add(this.fams);                     // For family code existence checking
     }
 
     @Override
     public void enterFamc(GEDCOMParser.FamcContext ctx) {
-        this.fams_famcCodes.add(this.getCleanCode(ctx.CODE().getText()));   // For family code existence checking
-        this.indiTags.put("famChild", ctx.FAMC().getText());    // Necessary for repeated tag checking
+        this.famc = this.getCleanCode(ctx.CODE().getText());    // For not equality between FAMS and FAMC
+        this.fams_famcCodes.add(this.famc);                     // For family code existence checking
     }
-
 
     @Override
     public void enterFamily(GEDCOMParser.FamilyContext ctx) {
@@ -205,6 +238,13 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
 
     }
 
+    /**
+     * Initializes the parent (husband or wife).
+     * Returns an {@link Individual} represents the parent.
+     *
+     * @param parent the parent code
+     * @return an {@code Individual} represents the parent
+     */
     private Individual initParentFamily(String parent) {
         Individual ind = null;
         if (parent != null) {
@@ -220,6 +260,12 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         return ind;
     }
 
+    /**
+     * Adds specified childs at the specified {@link Individual}
+     *
+     * @param i      the {@code Individual} which to add specified childs
+     * @param childs childs to add at the specified {@code Individual}
+     */
     private void addChilds(Individual i, List<String> childs) {
         childs.forEach(c -> {
             if (this.familityTree.isPresent(c))
@@ -227,7 +273,6 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         });
     }
 
-    // TODO : controllare FAM definita prima di INDI
     @Override
     public void enterFam_tag(GEDCOMParser.Fam_tagContext ctx) {
         if (ctx.i != null) {
@@ -257,19 +302,49 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     @Override
     public void exitReq(GEDCOMParser.ReqContext ctx) {
         if (ctx.REQ().getText().contains("ANCE"))
-            System.out.println(this.familityTree.getAncestorsOf(this.getCleanCode(ctx.CODE().getText())));
+            this.result.addAll(this.familityTree.getAncestorsOf(this.getCleanCode(ctx.CODE().getText())));
         else if (ctx.REQ().getText().contains("DESC"))
-            System.out.println(this.familityTree.getDescendantsOf(this.getCleanCode(ctx.CODE().getText())));
+            this.result.addAll(this.familityTree.getDescendantsOf(this.getCleanCode(ctx.CODE().getText())));
     }
 
-    private boolean checkAtMostOneTAG(String tag, List<String> s) {
-        return s.stream().filter(t -> t.equals(tag)).count() == 1;
+    /**
+     * Returns {@code true} if the specified tag appears in the specified {@link Set} s only one time.
+     * Otherwise, returns {@code false};
+     *
+     * @param tag  the tag for counting checking
+     * @param tags the {@code Set} of tags
+     * @return if the specified tag appears only one time {@code true}, otherwise {@code false}
+     */
+    private boolean checkAtMostOneTAG(String tag, List<String> tags) {
+        return tags.stream().filter(t -> t.equals(tag)).count() == 1;
     }
 
-    public String getCleanCode(String code) {
+    /**
+     * A CODE tag is something like that, @ABCD091DEF@.
+     * This method returns the code without '@' symbols.
+     *
+     * @param code the code to clean
+     * @return the clean code without '@' symbols.
+     */
+    private String getCleanCode(String code) {
         return code.substring(code.indexOf('@') + 1, code.lastIndexOf('@'));
     }
 
+    /**
+     * Converts the specified day, month and year strings to an array of int.
+     * Returns an array of 3 int corresponding day , month and year respectively as follows:
+     * <ul>
+     *  <li>array[0] = day</li>
+     *  <li>array[1] = month</li>
+     *  <li>array[2] = year</li>
+     *  </ul>
+     *
+     * @param day   the day to convert
+     * @param month the month to convert
+     * @param year  the year to convert
+     * @return an array of 3 int corresponding day , month and year respectively
+     * @throws NullPointerException if day, month or year is null
+     */
     private int[] convertDateFormatToDate(String day, String month, String year) {
         if (day == null || month == null || year == null)
             throw new NullPointerException("day, month and year cannot be null");
@@ -335,6 +410,4 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         }
         return dd_MM_YYYY;
     }
-
-
 }

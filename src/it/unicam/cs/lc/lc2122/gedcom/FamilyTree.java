@@ -11,7 +11,6 @@ import java.util.Set;
  * @author Template: Luca Tesei
  */
 
-
 public class FamilyTree {
     // mappa che contiene tutti gli individui presenti, recuperabili attraverso il
     // loro codice univoco.
@@ -110,7 +109,6 @@ public class FamilyTree {
      * @throws IllegalArgumentException se code non è presente nell'albero
      */
     public Set<String> getDescendantsOf(String code) {
-        System.out.println("code:"+code);
         Set<String> desc = new HashSet<>();
         Individual in = this.getIndividual(code);
         if (in != null) {
