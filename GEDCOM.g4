@@ -82,5 +82,5 @@ WS : [ \t]+ -> skip ;
 STR: ~('\r' | '\n' | ' ' | '/' | ',')+ ;
 // Convenient fragment tokens
 fragment F_VERSION : [0-9]+('.'[0-9]*)* ;
-fragment F_STR_ENG_MONTHS : ('Jan' | 'Feb' | 'Mar' | 'Apr' | 'May' | 'Jun' | 'July' | 'Aug' | 'Sept' | 'Oct' | 'Nov' | 'Dec' | 'JAN' | 'FEB' | 'MAR' | 'APR' | 'MAY' | 'JUN' | 'JULY' | 'AUG' | 'SEPT' | 'OCT' | 'NOV' | 'DEC') ;
-fragment F_STR_ITA_MONTHS : ('Gen' | 'Feb' | 'Mar' | 'Apr' | 'Mag' | 'Giu' | 'Lug' | 'Ago' | 'Set' | 'Ott' | 'Nov' | 'Dic' | 'GEN' | 'FEB' | 'MAR' | 'APR' | 'MAG' | 'GIU' | 'LUG' | 'AGO' | 'SET' | 'OTT' | 'NOV' | 'DIC') ;
+fragment F_STR_ENG_MONTHS : ('Jan' | 'Feb' | 'Mar' | 'Apr' | 'May' | 'Jun' | 'July' | 'Aug' | 'Sept' | 'Oct' | 'Nov' | 'Dec' ) ;
+fragment F_STR_ITA_MONTHS : ('Gen' | 'Feb' | 'Mar' | 'Apr' | 'Mag' | 'Giu' | 'Lug' | 'Ago' | 'Set' | 'Ott' | 'Nov' | 'Dic' ) ;
