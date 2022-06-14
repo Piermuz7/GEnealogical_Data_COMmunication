@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4491605e-c8b2-479b-bbac-6ac29520b97c" name="Changes" comment="added IllegalArgumentExceptione and test files">
-      <change afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/gedTestFiles/EsempioRossi.ged" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/gedTestFiles/Sample.ged" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/gedTestFiles/Simpson.ged" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/AncestorsDescendantsCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/AncestorsDescendantsCalculator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/FamilyTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/FamilyTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/MyGEDCOMListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/MyGEDCOMListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/generatedsources/GEDCOMLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/generatedsources/GEDCOMLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/generatedsources/GEDCOMLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/generatedsources/GEDCOMLexer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655164752286</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added IllegalArgumentExceptione and test files">
+      <created>1655164782548</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1655164782548</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

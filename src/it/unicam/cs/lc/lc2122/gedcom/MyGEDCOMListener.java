@@ -52,26 +52,12 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     }
 
     @Override
-    public void enterHead(GEDCOMParser.HeadContext ctx) {
-        this.tags.add(ctx.HEAD().getText());    // Adding for repeated tag checking
-    }
-
-    @Override
     public void enterHead_tag(GEDCOMParser.Head_tagContext ctx) {
         this.tags.add(ctx.getText());   // Adding for repeated tag checking
-    }
-
-    @Override
-    public void exitHead(GEDCOMParser.HeadContext ctx) {
         this.tags.forEach(t -> {    // Repeated head tags checking
             if (!this.checkAtMostOneTAG(t, this.tags))
                 throw new RepeatedTagException(t);
         });
-    }
-
-    @Override
-    public void exitHead_tag(GEDCOMParser.Head_tagContext ctx) {
-        this.tags.clear();
     }
 
     @Override
@@ -88,7 +74,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         });
         // duplicate codes between individuals
         this.individualCodeExistence.forEach(c -> {
-            if (this.individualCodeExistence.stream().filter(code -> code.equals(c)).count() != 1)
+            if (this.individualCodeExistence.stream().filter(code -> code.equals(c)).count() != 1 || this.familyCodeExistence.stream().filter(code -> code.equals(c)).count() != 1)
                 throw new DuplicateCodeException("An individual with code : " + c + " already exists");
         });
         // duplicate codes between families
@@ -118,7 +104,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
     public void exitIndividual(GEDCOMParser.IndividualContext ctx) {
         // unique code between FAMS and FAMC tags
         if (this.fams != null && this.fams.equals(this.famc))
-            throw new DuplicateCodeException("A FAMC or FAMS tag with code : " + this.getCleanCode(ctx.CODE().getText()) + " already exists");
+            throw new DuplicateCodeException("A FAMC or FAMS tag with code : " + this.fams + " already exists");
         this.indiTags.keySet().forEach(t -> this.checkAtMostOneTAG(t, new ArrayList<>(this.indiTags.keySet())));  // Repeated individual tags checking
         Individual ind = this.familityTree.getIndividual(this.getCleanCode(ctx.CODE().getText()));
         ind.setSurname(this.indiTags.get("surname"));
@@ -315,7 +301,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
      * @return if the specified tag appears only one time {@code true}, otherwise {@code false}
      */
     private boolean checkAtMostOneTAG(String tag, List<String> tags) {
-        return tags.stream().filter(t -> t.equals(tag)).count() == 1;
+        return tags.stream().filter(t -> t.contains(tag)).count() == 1;
     }
 
     /**
