@@ -101,7 +101,7 @@ Usage is very simple. You can:
 
 - [x] GEDCOM Grammar
 - [X] Walker pattern
-- [X] Ancestor and descendants computing
+- [X] Ancestors and descendants computing
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
