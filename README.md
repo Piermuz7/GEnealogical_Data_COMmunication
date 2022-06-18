@@ -24,9 +24,6 @@ Genealogical_Data_Communication is developed for Languages and Compilers Project
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -34,12 +31,12 @@ Genealogical_Data_Communication is developed for Languages and Compilers Project
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-All about project...
-
-Use the `BLANK_README.md` to get started.
+Genealogical_Data_Communication is developed to parse a GEDCOM file or a stream represents a GEDCOM format.
+<br>Lexer generation and in particular Parser generation written with [ANTLR4](https://www.antlr.org/).
+<br> Semantics part is written in Java.
+<br>The purpose is to:
+* execute the parsing of the file or stream
+* compute the ancestors or descendants, in according to the request in the GEDCOM file or stream.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -49,7 +46,8 @@ Use the `BLANK_README.md` to get started.
 
 Genealogical_Data_Communication is developed using:
 
-* [ANTLR4](https://www.antlr.org/)
+* [ANTLR4 4.10.1](https://www.antlr.org/) 
+* [Java](https://www.java.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -57,25 +55,27 @@ Genealogical_Data_Communication is developed using:
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Now you can compute your ancestors and your descendants thanks to  Genealogical_Data_Communication!
+<br>In this quickstart guide, you will:
+* choose a GEDCOM file in gedTestFiles project directory or write a GEDCOM file.<br>Alternatively you can write your GEDCOM stream on the standard input during program execution
+* run the program with the GEDCOM file or stream in input
+* see the ancestors or descendants about your request in the GEDCOM file or stream
 
 ### Prerequisites
 
-Only you need is ANTLR4 to run Genealogical_Data_Communication
-* ANTLR4
+To run Genealogical_Data_Communication only you need is:
+* ANTLR4:
  Install ANTLR4 from the official page [Download ANTLR](https://www.antlr.org/download.html)
+* Java: Install Java from the offical page [Download Java](https://www.java.com/download/)
 
 ### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Clone the repo
    ```sh
    git clone https://github.com/Piermuz7/Genealogical_Data_Communication.git
    ```
- 
+   
+2. Add ANTLR4 4.10.1 to libraries project
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -83,10 +83,14 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+Usage is very simple. You can:
+1. Run the program with:
+    ```sh
+   java command line
+   ```
+   or
+2. ```sh
+   run on your favorte IDE but not forget adding ANTLR4 on your project libraries!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -96,15 +100,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [x] GEDCOM Grammar
-- [ ] Walker/Visitor pattern
-- [ ] Ancestor and descendants computing
-<!--- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
--->
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+- [X] Walker pattern
+- [X] Ancestor and descendants computing
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -126,17 +123,6 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
@@ -145,39 +131,3 @@ Piermichele Rosati - piermichele.rosati@gmail.com
 Project Link: [https://github.com/Piermuz7/Genealogical_Data_Communication](https://github.com/Piermuz7/Genealogical_Data_Communication)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png

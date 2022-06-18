@@ -15,7 +15,7 @@ import java.util.*;
  * @author Piermichele Rosati
  */
 public class MyGEDCOMListener extends GEDCOMBaseListener {
-    private final FamilyTree familityTree;
+    private FamilyTree familityTree;
     private String husb, wife;                          // CODE of visiting husband and wife
     private String fams, famc;                          // CODE for not equality checking
     private final List<String> childs;                  // All childs CODE of the visiting family
@@ -49,6 +49,31 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
      */
     public Set<String> getResult() {
         return this.result;
+    }
+
+    @Override
+    public void enterS(GEDCOMParser.SContext ctx) {
+        this.clearAll();
+    }
+
+    /**
+     * Convenient method used to clear all data structures.
+     * Useful when more than one parsing with this Listener is executed.
+     */
+    private void clearAll() {
+        this.familityTree = new FamilyTree();
+        this.husb = null;
+        this.wife = null;
+        this.fams = null;
+        this.famc = null;
+        this.childs.clear();
+        this.tags.clear();
+        this.indiTags.clear();
+        this.dates.clear();
+        this.individualCodeExistence.clear();
+        this.familyCodeExistence.clear();
+        this.fams_famcCodes.clear();
+        this.result.clear();
     }
 
     @Override

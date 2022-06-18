@@ -1,10 +1,6 @@
 package it.unicam.cs.lc.lc2122.gedcom;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -214,8 +210,6 @@ public class Individual {
         i[0] += (this.givenName != null) ? ", givenName = " + this.givenName : " ";
         i[0] += (this.surname != null) ? ", surname = " + this.surname : " ";
         i[0] += (this.birthDate != null) ? ", birth date = " + this.toFormattedDate(this.birthDate) : "";
-
-
         i[0] += (this.birthPlace != null) ? ", birth place = " + this.birthPlace : "";
         i[0] += (this.deathDate != null) ? ", death date = " + this.toFormattedDate(this.deathDate) : "";
         i[0] += (this.deathPlace != null) ? ", death place = " + this.deathPlace : "";
@@ -227,6 +221,13 @@ public class Individual {
         return i[0];
     }
 
+    /**
+     * Convenient method that converts a {@link GregorianCalendar} in a simple date format like 'dd/MM/yyyy'.
+     * Returns a string represents the date in the format 'dd/MM/yyyy'.
+     *
+     * @param gregorianCalendar the {@code GregorianCalendar} which to convert
+     * @return a string represents the date in the format 'dd/MM/yyyy'.
+     */
     private String toFormattedDate(GregorianCalendar gregorianCalendar) {
         SimpleDateFormat formattedDate = new SimpleDateFormat("dd/MM/yyyy");
         return formattedDate.format(gregorianCalendar.getTime());
