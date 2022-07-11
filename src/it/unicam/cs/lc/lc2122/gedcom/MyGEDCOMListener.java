@@ -168,7 +168,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                 day_month_year = this.convertDateFormatToDate(ctx.date2().day.getText(), ctx.date2().month.getText(), ctx.date2().YEAR().getText());
                 if (this.dates.containsKey("birthDate"))
                     throw new RepeatedTagException(ctx.date2().DATE2().getText());
-                this.dates.put("birthDate", new GregorianCalendar(day_month_year[2], day_month_year[1], day_month_year[1]));
+                this.dates.put("birthDate", new GregorianCalendar(day_month_year[2], day_month_year[1], day_month_year[0]));
             }
         }
         if (ctx.plac() != null) {
@@ -188,7 +188,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
                 day_month_year = this.convertDateFormatToDate(ctx.date2().day.getText(), ctx.date2().month.getText(), ctx.date2().YEAR().getText());
                 if (this.dates.containsKey("deathDate"))
                     throw new RepeatedTagException(ctx.date2().DATE2().getText());
-                this.dates.put("deathDate", new GregorianCalendar(day_month_year[2], day_month_year[1], day_month_year[1]));
+                this.dates.put("deathDate", new GregorianCalendar(day_month_year[2], day_month_year[1], day_month_year[0]));
             }
         }
         if (ctx.plac() != null) {
