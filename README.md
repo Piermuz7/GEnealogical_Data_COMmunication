@@ -1,9 +1,9 @@
-# Genealogical_Data_Communication
+# GEnealogical_Data_COMmunication
 
 <div id="top"></div>
 Application for parsing GEDCOM file and computing ancestors or descendants of an individual.
 
-Genealogical_Data_Communication is developed for Languages and Compilers Project Exam at University of Camerino.
+GEnealogical_Data_COMmunication is developed for Languages and Compilers Project Exam at University of Camerino.
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -31,7 +31,7 @@ Genealogical_Data_Communication is developed for Languages and Compilers Project
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Genealogical_Data_Communication is developed to parse a GEDCOM file or a stream represents a GEDCOM format.
+GEnealogical_Data_COMmunication is developed to parse a GEDCOM file or a stream represents a GEDCOM format.
 <br>Lexer generation and in particular Parser generation written with [ANTLR4](https://www.antlr.org/).
 <br> Semantics part is written in Java.
 <br>The purpose is to:
@@ -44,7 +44,7 @@ Genealogical_Data_Communication is developed to parse a GEDCOM file or a stream 
 
 ### Built With
 
-Genealogical_Data_Communication is developed using:
+GEnealogical_Data_COMmunication is developed using:
 
 * [ANTLR4 4.10.1](https://www.antlr.org/) 
 * [Java](https://www.java.com/)
@@ -55,7 +55,7 @@ Genealogical_Data_Communication is developed using:
 
 <!-- GETTING STARTED -->
 ## Getting Started
-Now you can compute your ancestors and your descendants thanks to  Genealogical_Data_Communication!
+Now you can compute your ancestors and your descendants thanks to  GEnealogical_Data_COMmunication!
 <br>In this quickstart guide, you will:
 * choose a GEDCOM file in gedTestFiles project directory or write a GEDCOM file.<br>Alternatively you can write your GEDCOM stream on the standard input during program execution
 * run the program with the GEDCOM file or stream in input
@@ -63,7 +63,7 @@ Now you can compute your ancestors and your descendants thanks to  Genealogical_
 
 ### Prerequisites
 
-To run Genealogical_Data_Communication only you need is:
+To run GEnealogical_Data_COMmunication only you need is:
 * ANTLR4:
  Install ANTLR4 from the official page [Download ANTLR](https://www.antlr.org/download.html)
 * Java: Install Java from the offical page [Download Java](https://www.java.com/download/)
@@ -72,7 +72,7 @@ To run Genealogical_Data_Communication only you need is:
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Piermuz7/Genealogical_Data_Communication.git
+   git clone https://github.com/Piermuz7/GEnealogical_Data_COMmunication.git
    ```
    
 2. Add ANTLR4 4.10.1 to libraries project
@@ -128,6 +128,6 @@ Don't forget to give the project a star! Thanks again!
 
 Piermichele Rosati - piermichele.rosati@gmail.com
 
-Project Link: [https://github.com/Piermuz7/Genealogical_Data_Communication](https://github.com/Piermuz7/Genealogical_Data_Communication)
+Project Link: [https://github.com/Piermuz7/GEnealogical_Data_COMmunication](https://github.com/Piermuz7/GEnealogical_Data_COMmunication)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
