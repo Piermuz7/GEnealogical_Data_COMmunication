@@ -94,6 +94,9 @@ Usage is very simple. You can:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## Example: Potter Family Tree
+
+![Potter Family Tree](https://github.com/Piermuz7/GEnealogical_Data_COMmunication/blob/master/img/Potter_family_tree.png)
 
 
 <!-- ROADMAP -->
