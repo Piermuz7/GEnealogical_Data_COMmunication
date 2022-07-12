@@ -22,7 +22,7 @@ GEnealogical_Data_COMmunication is developed for Languages and Compilers Project
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#example:-potter-family-tree">Example: Potter Family Tree</a></li>
+    <li><a href="#example-potter-family-tree">Example: Potter Family Tree</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
   </ol>
@@ -95,20 +95,20 @@ Usage is very simple. You can:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Example: Potter Family Tree
+## Example Potter Family Tree
 
 ![Potter Family Tree](https://github.com/Piermuz7/GEnealogical_Data_COMmunication/blob/master/img/Potter_family_tree.png)
 
 On this Potter Family tree, notice that there are 7 individuals (HPI01, HPI02, ...) and there are two families: HPF01 and HPF02.
 If we want to calculate, for example, ancestors and descendants of Harry Potter, results are the following: 
 
-* Ancestors:
+* Ancestors: 0 ANCE @HPI03@
     ```sh
    HPI01
    HPI02
    HPI03
    ```
-* Descendants:
+* Descendants: 0 DESC @HPI03@
     ```sh
    HPI03
    HPI05
