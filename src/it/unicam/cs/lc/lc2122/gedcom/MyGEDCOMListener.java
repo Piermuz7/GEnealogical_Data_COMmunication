@@ -99,7 +99,7 @@ public class MyGEDCOMListener extends GEDCOMBaseListener {
         });
         // duplicate codes between individuals
         this.individualCodeExistence.forEach(c -> {
-            if (this.individualCodeExistence.stream().filter(code -> code.equals(c)).count() != 1 || this.familyCodeExistence.stream().filter(code -> code.equals(c)).count() != 1)
+            if (this.individualCodeExistence.stream().filter(code -> code.equals(c)).count() != 1)
                 throw new DuplicateCodeException("An individual with code : " + c + " already exists");
         });
         // duplicate codes between families
