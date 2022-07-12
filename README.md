@@ -91,7 +91,7 @@ Usage is very simple. You can:
    ```
    or
 2. ```sh
-   run on your favorte IDE but not forget adding ANTLR4 on your project libraries!
+   run on your favourite IDE but not forget adding ANTLR4 on your project libraries!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
