@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4491605e-c8b2-479b-bbac-6ac29520b97c" name="Changes" comment="bug fixing">
+    <list default="true" id="4491605e-c8b2-479b-bbac-6ac29520b97c" name="Changes" comment="update README.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/Individual.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/Individual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/MyGEDCOMListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/MyGEDCOMListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/gedTestFiles/PotterFamily.ged" beforeDir="false" afterPath="$PROJECT_DIR$/src/it/unicam/cs/lc/lc2122/gedcom/gedTestFiles/PotterFamily.ged" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,21 +35,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ToolWindowRun.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Piermuz/Desktop/Genealogical_Data_Communication/src/it/unicam/cs/lc/lc2122/gedcom/g4TestFiles&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ToolWindowRun.ShowToolbar": "false",
+    "last_opened_file_path": "C:/Users/Piermuz/Documents/GitHub/GEnealogical_Data_COMmunication/src/it/unicam/cs/lc/lc2122/gedcom/gedTestFiles",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Piermuz\Documents\GitHub\GEnealogical_Data_COMmunication\src\it\unicam\cs\lc\lc2122\gedcom\gedTestFiles" />
+      <recent name="C:\Users\Piermuz\Documents\GitHub\GEnealogical_Data_COMmunication\img" />
       <recent name="C:\Users\Piermuz\Desktop\Genealogical_Data_Communication\src\it\unicam\cs\lc\lc2122\gedcom\g4TestFiles" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -176,7 +177,35 @@
       <option name="project" value="LOCAL" />
       <updated>1655169755138</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="bug fixing on wrong array index for date">
+      <created>1657562726603</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1657562726603</updated>
+    </task>
+    <task id="LOCAL-00014" summary="bug fixing on useless check for DuplicateCodeException">
+      <created>1657617044460</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1657617044460</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Added Potter Family GEDCOM file example">
+      <created>1657617375244</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1657617375244</updated>
+    </task>
+    <task id="LOCAL-00016" summary="update README.md">
+      <created>1657617689203</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1657617689203</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -203,6 +232,10 @@
     <MESSAGE value="added suppress warnings, modified if in initParentFamily method" />
     <MESSAGE value="added IllegalArgumentExceptione and test files" />
     <MESSAGE value="bug fixing" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fixing" />
+    <MESSAGE value="bug fixing on wrong array index for date" />
+    <MESSAGE value="bug fixing on useless check for DuplicateCodeException" />
+    <MESSAGE value="Added Potter Family GEDCOM file example" />
+    <MESSAGE value="update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
   </component>
 </project>
