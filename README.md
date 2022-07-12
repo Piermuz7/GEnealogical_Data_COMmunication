@@ -22,6 +22,7 @@ GEnealogical_Data_COMmunication is developed for Languages and Compilers Project
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#example:-potter-family-tree">Example: Potter Family Tree</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
   </ol>
