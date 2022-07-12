@@ -31,7 +31,7 @@ GEnealogical_Data_COMmunication is developed for Languages and Compilers Project
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-GEnealogical_Data_COMmunication is developed to parse a GEDCOM file or a stream represents a GEDCOM format.
+GEnealogical_Data_COMmunication is developed to parse a [GEDCOM](https://en.wikipedia.org/wiki/GEDCOM) file or a stream represents a GEDCOM format.
 <br>Lexer generation and in particular Parser generation written with [ANTLR4](https://www.antlr.org/).
 <br> Semantics part is written in Java.
 <br>The purpose is to:
@@ -98,6 +98,24 @@ Usage is very simple. You can:
 
 ![Potter Family Tree](https://github.com/Piermuz7/GEnealogical_Data_COMmunication/blob/master/img/Potter_family_tree.png)
 
+On this Potter Family tree, notice that there are 7 individuals (HPI01, HPI02, ...) and there are two families: HPF01 and HPF02.
+If we want to calculate, for example, ancestors and descendants of Harry Potter, results are the following: 
+
+* Ancestors:
+    ```sh
+   HPI01
+   HPI02
+   HPI03
+   ```
+* Descendants:
+    ```sh
+   HPI03
+   HPI05
+   HPI06
+   HPI07
+   ```
+For GEDCOM definition, an individual is an ancestor and a descendant of itself.
+HPI03, so Harry Potter is an ancestor and a descendant of himself.
 
 <!-- ROADMAP -->
 ## Roadmap
