@@ -93,6 +93,8 @@ Usage is very simple. You can:
 2. ```sh
    run on your favourite IDE but not forget adding ANTLR4 on your project libraries!
 
+Remember to press CTRL+D or CTRL+Z after GEDCOM stream if you copy and paste that GEDCOM stream.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Example Potter Family Tree
