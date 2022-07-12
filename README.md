@@ -85,15 +85,15 @@ To run GEnealogical_Data_COMmunication only you need is:
 <!-- USAGE EXAMPLES -->
 ## Usage
 Usage is very simple. You can:
-1. Run the program with:
+1. Run the program downloading the release:
     ```sh
-   java command line
+   java -jar Genealogical_Data_Communication.jar YOUR_FILEPATH
    ```
    or
 2. ```sh
    run on your favourite IDE but not forget adding ANTLR4 on your project libraries!
 
-Remember to press CTRL+D or CTRL+Z after GEDCOM stream if you copy and paste that GEDCOM stream.
+* Remember to press CTRL+D or CTRL+Z at the end of GEDCOM stream if you copy and paste that GEDCOM stream.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -117,8 +117,11 @@ If we want to calculate, for example, ancestors and descendants of Harry Potter,
    HPI06
    HPI07
    ```
-For GEDCOM definition, an individual is an ancestor and a descendant of itself.
-HPI03, so Harry Potter is an ancestor and a descendant of himself.
+Notice that the order of a set of ancestors or descendants it is not important.
+Moreover, for GEDCOM definition, an individual is an ancestor and a descendant of itself.
+In Potter Family tree, the individual with CODE @HPI03@, so Harry Potter is an ancestor and a descendant of himself.
+Harry Potter's ancestors are James Potter (HPI02) and Lily Evans Potter (HPI01) and Harry Potter (HPI03) 
+while his descendants are: James Sirius Potter (HPI05), Albus Severus Potter (HPI06), Lily Luna Potter (HPI07) and Harry Potter (HPI03).
 
 <!-- ROADMAP -->
 ## Roadmap
